@@ -1,4 +1,3 @@
-import {StatusBar} from 'expo-status-bar';
 import {Alert, Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useEffect, useState} from "react";
 import {Picker} from "@react-native-picker/picker";
@@ -8,7 +7,6 @@ export default function App() {
     const [amount, setAmount] = useState('');
     const [codes, setCodes] = useState([]);
     const [selectedCode, setSelectedCode] = useState('CHF');
-    const [rates, setRates] = useState([]);
     const to = 'EUR'
 
     const fetchCodes = () => {
@@ -80,7 +78,7 @@ export default function App() {
                 <Picker
                     placeholder='CHF'
                     selectedValue={selectedCode}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue) =>
                         setSelectedCode(itemValue)
                     }
                     style={styles.pickerInput}>
