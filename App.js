@@ -50,7 +50,7 @@ export default function App() {
     }
 
     //TODO dirty code ?
-    // Fetches the symbols only if the lis is empty
+    // Fetches the symbols only if the list is empty
     useEffect(() => {
         if (codes.length === 0) {
             fetchCodes();
