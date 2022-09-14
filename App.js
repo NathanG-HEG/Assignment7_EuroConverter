@@ -7,11 +7,12 @@ export default function App() {
     const [amount, setAmount] = useState('');
     const [codes, setCodes] = useState([]);
     const [selectedCode, setSelectedCode] = useState('CHF');
-    const to = 'EUR'
+    const to = "EUR";
+    const key = "rvvntuHwpPBIqGgOOMTjSUJZZawOZjuT";
 
     const fetchCodes = () => {
         let myHeaders = new Headers();
-        myHeaders.append("apikey", "bCpvxC9e6uS46Z2SVL7hdlqhHc7OV9g7");
+        myHeaders.append("apikey", key);
 
         let requestOptions = {
             method: 'GET',
@@ -30,7 +31,7 @@ export default function App() {
 
     const fetchConvert = () => {
         let myHeaders = new Headers();
-        myHeaders.append("apikey", "bCpvxC9e6uS46Z2SVL7hdlqhHc7OV9g7");
+        myHeaders.append("apikey", key);
 
         let requestOptions = {
             method: 'GET',
@@ -40,22 +41,23 @@ export default function App() {
 
         let amount1 = parseFloat(amount);
 
-        fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${to}r&from=${selectedCode}&amount=${amount1}`, requestOptions)
+        fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${selectedCode}&amount=${amount1}`, requestOptions)
             .then(response => response.text())
-            .then(result => setResult(JSON.parse(result).result))
+            .then(result => {
+                setResult(JSON.parse(result).result);
+                console.log(result);
+            })
             .catch(error => {
                 Alert.alert('Error', error);
                 console.log(error);
             });
+        console.log(result);
     }
 
-    //TODO dirty code ?
-    // Fetches the symbols only if the list is empty
     useEffect(() => {
-        if (codes.length === 0) {
-            fetchCodes();
-        }
-    });
+        fetchCodes()
+        console.log(codes);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -78,8 +80,10 @@ export default function App() {
                 <Picker
                     placeholder='CHF'
                     selectedValue={selectedCode}
-                    onValueChange={(itemValue) =>
-                        setSelectedCode(itemValue)
+                    onValueChange={(itemValue) => {
+                        setSelectedCode(itemValue);
+                        console.log(itemValue);
+                    }
                     }
                     style={styles.pickerInput}>
                     {
@@ -112,7 +116,8 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 11,
         minWidth: 200,
-        marginBottom: 5
+        marginBottom: 5,
+        maxWidth: 200,
     },
     pickerInput: {
         borderColor: 'black',
